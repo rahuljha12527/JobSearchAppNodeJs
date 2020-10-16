@@ -25,13 +25,13 @@ const server=createServer((req,res)=>{
        const {search,location,country='gb'}=decodedParams;
 
        const targetURL=`${config.BASE_URL}/${country.toLowerCase()}/${config.BASE_PARAMS}&app_id=
-       ${config.APP_ID}&app_key=${config.API_KEY}&what=${search}&where=${location}`:
+       ${config.APP_ID}&app_key=${config.API_KEY}&what=${search}&where=${location}`;
 
        if(req.method==='GET'){
            console.log(chalk.green(`Proxy GET request to: ${targetURL}`));
            axios.get(targetURL)
            .then(response=>{
-               res.writeHead(200,headers);
+               res.writeHead(200,headers);  
                res.end(JSON.stringify(response.data));
                
            })
@@ -50,5 +50,5 @@ const server=createServer((req,res)=>{
 
 server.listen(3000,()=>{
     console.log(chalk.green('Server listening'));
-    
+
 })
