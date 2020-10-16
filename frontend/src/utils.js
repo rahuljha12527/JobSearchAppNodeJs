@@ -7,3 +7,9 @@ export const getCurrencySymbol=countryCode=>{
    };
    return currencies[countryCode];
 };
+
+export const exportFormData=form=>Array
+         .from(form.elements)
+         .reduce((acc,{id,value})=>({
+             ...acc,[id]:value
+         }),{})

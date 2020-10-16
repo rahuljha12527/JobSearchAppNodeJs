@@ -1,4 +1,4 @@
-import {getCurrencySymbol} from './utils';
+import {getCurrencySymbol,extractFormData} from './utils';
 
 
 class JobSearch {
@@ -32,7 +32,21 @@ class JobSearch {
       this.searchForm.addEventListener('submit',(event)=>{
         event.preventDefault();
         this.resultsContainer.innerHTML='';
-        const {search,location}=          
+        const {search,location}= extractFormData(this.searchForm);
+        
+        fetch(`http://localhost:3000/?search=${search}&location=${location}&country=${this.countryCode}`)
+           .then(response=>response.json())
+           .then(({results})=>{
+               return results
+                  .map(job=>{
+                      jobTemplate(job,this.currencySymbol)
+                  })
+                  .join('');
+           })
+           .then(jobs=>{
+               this.resultsContainer.innerHTML=jobs
+           })
+
       })
   }
 }
